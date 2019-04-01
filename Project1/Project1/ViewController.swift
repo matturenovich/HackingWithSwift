@@ -13,6 +13,7 @@ class ViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		title = "Storm Viewer"
 		
 		let fm = FileManager.default // Data Type that allows interaction with the filesystem.
 		let path = Bundle.main.resourcePath! // Declares a constant to the resource path of the app bundle.
@@ -45,5 +46,13 @@ class ViewController: UITableViewController {
 	// Here’s where a little bit of iOS magic comes in: if you look at the Settings app, you’ll see it can fit only about 12 rows on the screen at any given time, depending on the size of your phone.
 	//
 	// To save CPU time and RAM, iOS only creates as many rows as it needs to work. When one rows moves off the top of the screen, iOS will take it away and put it into a reuse queue ready to be recycled into a new row that comes in from the bottom. This means you can scroll through hundreds of rows a second, and iOS can behave lazily and avoid creating any new table view cells – it just recycles the existing ones.
+	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
+			vc.selectedImage = pictures[indexPath.row]
+			
+			navigationController?.pushViewController(vc, animated: true)
+		}
+	}
 }
 
